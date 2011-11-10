@@ -1,0 +1,10 @@
+52c3657c75d80c4bfd90b35a676cc0c4 *ChangeLog
+fdb071ed525d7541fcfd8c0b527a4032 *DESCRIPTION
+2ec1ee93ee2e1c723cd55b1a7f77fa15 *NAMESPACE
+8e95c017f4209f31375c64b0b03213c2 *R/integrate.R
+01164c1e32465bdb1523c9794d3f2ce9 *man/adaptIntegrate.Rd
+bee0312f976f0b4b7c28636263b4a014 *man/cubature-package.Rd
+cbf14b320c70258a17742b01ac9f5cea *src/Makevars
+fa1af02bc8e6f4aed0b8fba8c5b70b03 *src/cubature.c
+af6abf2a4ff1098ca70c50d7bfc5ab44 *src/cubature.h
+2151f54a48f1ec4cf6b6b8a94c242948 *src/rcubature.c

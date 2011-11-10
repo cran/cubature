@@ -1,0 +1,13 @@
+Changes for package cubature
+
+Version 1.0 (2009-12-18)
+  - Original version of package based on Steven G. Johnson's cubature
+	routines at http://ab-initio.mit.edu/wiki/index.php/Cubature
+
+Version 1.1 (2011-11-10)
+  Changes from previous versions
+  - Synced up to SGJ cubature routines dated 2010-10-18 on his website
+	http://ab-initio.mit.edu/wiki/index.php/Cubature
+  - Bugfix: potential memory leak fixed up in heap routine (my oversight!)
+  - Routine adaptIntegrate gains ... argument (request of Baptiste Auguie)
+  - Corrected radius constant in testFn2 to match cubature output exactly

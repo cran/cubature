@@ -26,15 +26,6 @@ SEXP CUB_set_common_env(SEXP rho) {
     return R_NilValue;
 }
 
-
-SEXP mkans(double x) {
-  SEXP ans;
-  PROTECT(ans = allocVector(REALSXP, 1));
-  REAL(ans)[0] = x;
-  UNPROTECT(1);
-  return ans;
-}
-
 void fWrapper(unsigned ndim, const double *x, void *fdata,
 	      unsigned fdim, double *fval) {
   SEXP xx, fx;
@@ -59,7 +50,7 @@ void fWrapper(unsigned ndim, const double *x, void *fdata,
 
 SEXP doCubature(SEXP sfDim, SEXP sf, SEXP sxLL, SEXP sxUL, SEXP smaxEval,
 		SEXP sabsErr, SEXP stol, SEXP rho) {
-  
+
   double *xLL, *xUL, *val, *err;
   double absErr, tol;
   int i, fDim, nDim, maxEval, retCode;
@@ -74,15 +65,15 @@ SEXP doCubature(SEXP sfDim, SEXP sf, SEXP sxLL, SEXP sxUL, SEXP smaxEval,
   xLL = REAL(sxLL); xUL = REAL(sxUL);
   absErr = REAL(sabsErr)[0]; tol = REAL(stol)[0];
   maxEval = INTEGER(smaxEval)[0];
-  
+
   val = (double *) R_alloc(fDim, sizeof(double));
   err = (double *) R_alloc(fDim, sizeof(double));
-  
+
   retCode = adapt_integrate(fDim, fWrapper, NULL,
-			    nDim, xLL, xUL, maxEval, 
+			    nDim, xLL, xUL, maxEval,
 			    absErr, tol,
 			    val, err);
-  
+
   PROTECT(integral = allocVector(REALSXP, fDim));
   for (i = 0; i < fDim; ++i) {
     REAL(integral)[i] = val[i];
