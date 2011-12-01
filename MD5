@@ -1,8 +1,8 @@
-52c3657c75d80c4bfd90b35a676cc0c4 *ChangeLog
-fdb071ed525d7541fcfd8c0b527a4032 *DESCRIPTION
+7636b15f469f908c12d061142130851f *ChangeLog
+5a521dc05b7dd65448ae2ab2de56895f *DESCRIPTION
 2ec1ee93ee2e1c723cd55b1a7f77fa15 *NAMESPACE
-8e95c017f4209f31375c64b0b03213c2 *R/integrate.R
-01164c1e32465bdb1523c9794d3f2ce9 *man/adaptIntegrate.Rd
+98a5f99552887d2f960b18f8373027eb *R/integrate.R
+bedaaf3f4922219987a56ce151b3fc12 *man/adaptIntegrate.Rd
 bee0312f976f0b4b7c28636263b4a014 *man/cubature-package.Rd
 cbf14b320c70258a17742b01ac9f5cea *src/Makevars
 fa1af02bc8e6f4aed0b8fba8c5b70b03 *src/cubature.c

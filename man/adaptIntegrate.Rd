@@ -9,7 +9,8 @@
   of (possibly) vector-valued integrands over hypercubes.
 }
 \usage{
-adaptIntegrate(f, lowerLimit, upperLimit, ..., tol = 1e-05, fDim = 1, maxEval = 0, absError=0)
+adaptIntegrate(f, lowerLimit, upperLimit, ..., tol = 1e-05, fDim = 1,
+               maxEval = 0, absError=0, doChecking=FALSE)
 }
 \arguments{
   \item{f}{
@@ -37,6 +38,11 @@ adaptIntegrate(f, lowerLimit, upperLimit, ..., tol = 1e-05, fDim = 1, maxEval = 
   }
   \item{absError}{
     The maximum absolute error tolerated
+  }
+  \item{doChecking}{
+    A flag to be a bit anal about checking inputs to C routines. A FALSE
+    value results in approximately 9 percent speed gain in our
+    experiments. Your mileage will of course vary. Default value is TRUE.
   }
 }
 \details{

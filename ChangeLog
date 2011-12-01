@@ -11,3 +11,7 @@ Version 1.1 (2011-11-10)
   - Bugfix: potential memory leak fixed up in heap routine (my oversight!)
   - Routine adaptIntegrate gains ... argument (request of Baptiste Auguie)
   - Corrected radius constant in testFn2 to match cubature output exactly
+
+Version 1.1-1 (2011-12-01)
+	- Added doChecking argument (default FALSE) to save some
+	        computation time in evaluating integrand (9% speedup).
