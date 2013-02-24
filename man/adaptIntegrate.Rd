@@ -42,7 +42,7 @@ adaptIntegrate(f, lowerLimit, upperLimit, ..., tol = 1e-05, fDim = 1,
   \item{doChecking}{
     A flag to be a bit anal about checking inputs to C routines. A FALSE
     value results in approximately 9 percent speed gain in our
-    experiments. Your mileage will of course vary. Default value is TRUE.
+    experiments. Your mileage will of course vary. Default value is FALSE.
   }
 }
 \details{

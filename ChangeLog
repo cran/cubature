@@ -15,3 +15,12 @@ Version 1.1 (2011-11-10)
 Version 1.1-1 (2011-12-01)
 	- Added doChecking argument (default FALSE) to save some
 	        computation time in evaluating integrand (9% speedup).
+
+Version 1.1-2 (2011-12-08)
+	- Fixed typo in doc for function adaptIntegrate; default value for
+		doChecking was incorrectly stated as TRUE
+
+Version 1.1-2 (2013-02-24)
+        - Registered native cubature functions adapt_integrate and
+        	adapt_integrate_v so that they are directly callable from C
+		(courtesy of Simen Gaure) 
