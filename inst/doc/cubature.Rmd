@@ -26,12 +26,12 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Starting with version 1.2, `cubature` now uses `Rcpp`. Also, version
-1.3 uses the newer version (1.0.2) of Steven G. Johnson's `hcubature`
-and `pcubature` routines, including the vectorized interface.
+This R `cubature` package exposes both the `hcubature` and `pcubature`
+routines of the underlying C library, including the vectorized
+interfaces.
 
 Per the documentation, use of `pcubature` is advisable only for smooth
-integrands in dimesions up to three at most. In fact, the `pcubature`
+integrands in dimensions up to three at most. In fact, the `pcubature`
 routines perform significantly worse than the vectorized `hcubature`
 in inappropriate cases. So when in doubt, you are better off using
 `hcubature`.
@@ -278,7 +278,7 @@ d <- harness(f = testFn3, fv = testFn3_v,
 knitr::kable(d, digits = 3)
 ```
 
-## Gaussian centered at \frac{1}{2}
+## Gaussian centered at $\frac{1}{2}$
 
 ```{r}
 testFn4 <- function(x) {
@@ -422,17 +422,18 @@ R package in sync with new versions of the underlying C library. In
 fact, the Cuba C library has marched on now to version 4.2.
 
 In a matter of a couple of hours, I was able to link the latest
-version (4.2) of the [Cuba libraries](http://www.feynarts.de/cuba/)
-with R using Rcpp; you can see it on the `Cuba` branch of my
-[Github repo](https://github.com/bnaras/cubature). This branch package
-builds and installs in R on my Mac and Ubuntu machines and gives
-correct answers at least for `cuhre`. The
-4.2 version of the Cuba library also has vectorized versions of the
-routines that can be gainfully exploited (not implemented in the
-branch). As of this writing, I have also not yet carefully considered
-the issue of parallel execution (via `fork()`) which might be
-problematic in the Windows version. In addition, my timing benchmarks
-showed very disappointing results.
+version (4.2) of the [Cuba
+libraries](https://directory.fsf.org/wiki/Cuba) (canonical web link
+now seems dead) with R using Rcpp; you can see it on the `Cuba` branch
+of my [Github repo](https://github.com/bnaras/cubature). This branch
+package builds and installs in R on my Mac and Ubuntu machines and
+gives correct answers at least for `cuhre`. The 4.2 version of the
+Cuba library also has vectorized versions of the routines that can be
+gainfully exploited (not implemented in the branch). As of this
+writing, I have also not yet carefully considered the issue of
+parallel execution (via `fork()`) which might be problematic in the
+Windows version. In addition, my timing benchmarks showed very
+disappointing results.
 
 For the above reasons, I decided not to bother with Cuba for now, but
 if there is enough interest, I might consider rolling `Cuba-4.2+` into
@@ -450,3 +451,8 @@ The following is therefore my recommendation.
 3. For smooth integrands in low dimensions ($\leq 3$), `pcubature` might be
    worth trying out. Experiment before using in a production package.
 
+## Session Info
+
+```{r}
+sessionInfo()
+```

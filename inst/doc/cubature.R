@@ -293,3 +293,6 @@ d <- harness(f = I.2d, fv = I.2d_v,
              lowerLimit = rep(-1, 2), upperLimit = rep(1, 2), times = 100)
 knitr::kable(d, digits = 3)
 
+## ------------------------------------------------------------------------
+sessionInfo()
+
