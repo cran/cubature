@@ -1,6 +1,6 @@
-762002fda27427654dce966590b862c7 *DESCRIPTION
+d01f73a912bb25df2ab62bfd549556b6 *DESCRIPTION
 8df3f49918a800e7b888bad4cc989d17 *NAMESPACE
-a890ce40c07aeb55275ee6b3b1dc624b *NEWS.md
+b33a7381cc3ff86d9353a5207bd27531 *NEWS.md
 2aefbfddaefcea13068f51831e586cf8 *R/RcppExports.R
 64a8aae99b4968e149b8494f66f58d02 *R/cubature-package.R
 63a1be59257b342d3ba289f682925f8b *R/hcubature.R
@@ -8,7 +8,7 @@ a890ce40c07aeb55275ee6b3b1dc624b *NEWS.md
 b51e02c8d4d2b82a9f464160b16092cc *build/vignette.rds
 170ed8075a3d0af5577287ac28a94b5b *inst/doc/cubature.R
 6f2b435fbe67316fd68378d1543c7212 *inst/doc/cubature.Rmd
-d676f3bb5acf16de51ad6aa9428fb44d *inst/doc/cubature.html
+908da3b2dfec9c8722d3355f0dd8d0c2 *inst/doc/cubature.html
 8f9a5a70456a0b11ab7244b4beb521f0 *inst/include/cubature.h
 7d2e2edf6d3dedd86dab67ba85725b2b *inst/include/exp_cubature.h
 c25f03d1f6f706441867fc3b6caab050 *inst/include/exp_cubature_typedefs.h
@@ -16,7 +16,7 @@ adb8e7b6c3ef32f0b86f7e6113266007 *man/cubature-package.Rd
 67fa63c02b5bb1f6d69192adbd369fa2 *man/hcubature.Rd
 ca35bf22607b647ae058b2130d2562d7 *src/Makevars
 6ce6c865d3cf2ea16cf887607bbc3f83 *src/Makevars.win
-094ed9ab6791fc498868529307c37190 *src/Rcpp-cubature.cpp
+cf2e5efd3de7336d980eaffdc516870d *src/Rcpp-cubature.cpp
 9ab34335565b2acc577f0e32d3cbfaa7 *src/RcppExports.cpp
 d32239bcb673463ab874e80d47fae504 *src/cubature-1.0.3/COPYING
 55cbec04f280a64eb409f582ba56ba5d *src/cubature-1.0.3/Makefile
