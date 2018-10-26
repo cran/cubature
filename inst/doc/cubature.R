@@ -8,12 +8,9 @@ knitr::opts_chunk$set(
 )
 
 ## ------------------------------------------------------------------------
-loadedSuggested  <- c(benchr = FALSE, R2Cuba = FALSE)
+loadedSuggested  <- c(benchr = FALSE)
 if (requireNamespace("benchr", quietly = TRUE)) {
     loadedSuggested["benchr"] <- TRUE
-}
-if (requireNamespace("R2Cuba", quietly = TRUE)) {
-    loadedSuggested["R2Cuba"] <- TRUE
 }
 
 library(cubature)
@@ -25,16 +22,6 @@ harness <- function(which = NULL,
              hc.v = "Vectorized Hcubature",
              pc = "Non-vectorized Pcubature",
              pc.v = "Vectorized Pcubature")
-
-    if (loadedSuggested["R2Cuba"]) {
-        fns <- c(fns, cc = "R2Cuba::cuhre")
-        cc <- function() R2Cuba::cuhre(ndim = ndim, ncomp = 1, integrand = f,
-                                       lower = lowerLimit, upper = upperLimit,
-                                       flags = list(verbose = 0, final = 1),
-                                       rel.tol = tol,
-                                       max.eval = 10^6,
-                                       ...)
-    }
 
     hc <- function() cubature::hcubature(f = f,
                                          lowerLimit = lowerLimit,
@@ -122,19 +109,21 @@ d <- harness(f = my_dmvnorm, fv = my_dmvnorm_v,
 knitr::kable(d, digits = 3)
 
 ## ------------------------------------------------------------------------
-library(mvtnorm)
-g1 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
-                                  upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
-                                  alg = Miwa(), abseps = 1e-5, releps = 1e-5)
-g2 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
-                                  upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
-                                  alg = GenzBretz(), abseps = 1e-5, releps = 1e-5)
-g3 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
-                                  upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
-                                  alg = TVPACK(), abseps = 1e-5, releps = 1e-5)
-
-knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = FALSE)),
-             digits = 3, row.names = FALSE)
+if (requireNamespace("mvtnorm", quietly = TRUE)) {
+    g1 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
+                                      upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
+                                      alg = Miwa(), abseps = 1e-5, releps = 1e-5)
+    g2 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
+                                      upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
+                                      alg = GenzBretz(), abseps = 1e-5, releps = 1e-5)
+    g3 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
+                                      upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
+                                      alg = TVPACK(), abseps = 1e-5, releps = 1e-5)
+    knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = FALSE)),
+                 digits = 3, row.names = FALSE)
+} else {
+    cat("NOTE: Package mvtnorm not available for comparison\n")
+}
 
 ## ------------------------------------------------------------------------
 testFn0 <- function(x) prod(cos(x))

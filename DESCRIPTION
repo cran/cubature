@@ -1,7 +1,7 @@
 Package: cubature
 Type: Package
 Title: Adaptive Multivariate Integration over Hypercubes
-Version: 1.4
+Version: 1.4-1
 VignetteBuilder: knitr
 URL: https://github.com/bnaras/cubature
 BugReports: https://github.com/bnaras/cubature/issues
@@ -19,11 +19,11 @@ LinkingTo: Rcpp
 Imports: Rcpp
 NeedsCompilation: yes
 RoxygenNote: 6.0.1
-Suggests: testthat, knitr, mvtnorm, R2Cuba, benchr
-Packaged: 2018-06-13 12:23:48 UTC; naras
+Suggests: testthat, knitr, mvtnorm, benchr
+Packaged: 2018-10-25 23:37:30 UTC; naras
 Author: Balasubramanian Narasimhan [aut, cre],
   Manuel Koller [ctb],
   Steven G. Johnson [aut]
 Maintainer: Balasubramanian Narasimhan <naras@stat.stanford.edu>
 Repository: CRAN
-Date/Publication: 2018-06-13 22:22:54 UTC
+Date/Publication: 2018-10-26 05:00:03 UTC
