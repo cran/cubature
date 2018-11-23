@@ -8,11 +8,7 @@ knitr::opts_chunk$set(
 )
 
 ## ------------------------------------------------------------------------
-loadedSuggested  <- c(benchr = FALSE)
-if (requireNamespace("benchr", quietly = TRUE)) {
-    loadedSuggested["benchr"] <- TRUE
-}
-
+library(benchr)
 library(cubature)
 
 harness <- function(which = NULL,
@@ -21,7 +17,18 @@ harness <- function(which = NULL,
     fns <- c(hc = "Non-vectorized Hcubature",
              hc.v = "Vectorized Hcubature",
              pc = "Non-vectorized Pcubature",
-             pc.v = "Vectorized Pcubature")
+             pc.v = "Vectorized Pcubature",
+             cc = "Non-vectorized cubature::cuhre",
+             cc_v = "Vectorized cubature::cuhre")
+    cc <- function() cubature::cuhre(f = f,
+                                     lowerLimit = lowerLimit, upperLimit = upperLimit,
+                                     relTol = tol,
+                                     ...)
+    cc_v <- function() cubature::cuhre(f = fv,
+                                       lowerLimit = lowerLimit, upperLimit = upperLimit,
+                                       relTol = tol,
+                                       nVec = 1024L,
+                                       ...)
 
     hc <- function() cubature::hcubature(f = f,
                                          lowerLimit = lowerLimit,
@@ -37,10 +44,10 @@ harness <- function(which = NULL,
                                            ...)
 
     pc <- function() cubature::pcubature(f = f,
-                                         lowerLimit = lowerLimit,
-                                         upperLimit = upperLimit,
-                                         tol = tol,
-                                         ...)
+                                     lowerLimit = lowerLimit,
+                                     upperLimit = upperLimit,
+                                     tol = tol,
+                                     ...)
 
     pc.v <- function() cubature::pcubature(f = fv,
                                            lowerLimit = lowerLimit,
@@ -48,7 +55,7 @@ harness <- function(which = NULL,
                                            tol = tol,
                                            vectorInterface = TRUE,
                                            ...)
-
+    
     ndim = length(lowerLimit)
 
     if (is.null(which)) {
@@ -58,15 +65,11 @@ harness <- function(which = NULL,
     }
     fnList <- lapply(names(fns)[fnIndices], function(x) call(x))
 
-    if (loadedSuggested["benchr"]) {
-        argList <- c(fnList, times = times, progress = FALSE)
-        result <- do.call(benchr::benchmark, args = argList)
-        d <- summary(result)[seq_along(fnIndices), ]
-        d$expr <- fns[fnIndices]
-        d
-    } else {
-        d <- data.frame(expr = names(fns)[fnIndices], timing = NA)
-    }
+    argList <- c(fnList, times = times, progress = FALSE)
+    result <- do.call(benchr::benchmark, args = argList)
+    d <- summary(result)[seq_along(fnIndices), ]
+    d$expr <- fns[fnIndices]
+    d
 }
 
 ## ------------------------------------------------------------------------
@@ -109,21 +112,19 @@ d <- harness(f = my_dmvnorm, fv = my_dmvnorm_v,
 knitr::kable(d, digits = 3)
 
 ## ------------------------------------------------------------------------
-if (requireNamespace("mvtnorm", quietly = TRUE)) {
-    g1 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
-                                      upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
-                                      alg = Miwa(), abseps = 1e-5, releps = 1e-5)
-    g2 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
-                                      upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
-                                      alg = GenzBretz(), abseps = 1e-5, releps = 1e-5)
-    g3 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
-                                      upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
-                                      alg = TVPACK(), abseps = 1e-5, releps = 1e-5)
-    knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = FALSE)),
-                 digits = 3, row.names = FALSE)
-} else {
-    cat("NOTE: Package mvtnorm not available for comparison\n")
-}
+library(mvtnorm)
+g1 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
+                                  upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
+                                  alg = Miwa(), abseps = 1e-5, releps = 1e-5)
+g2 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
+                                  upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
+                                  alg = GenzBretz(), abseps = 1e-5, releps = 1e-5)
+g3 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
+                                  upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
+                                  alg = TVPACK(), abseps = 1e-5, releps = 1e-5)
+
+knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = FALSE)),
+             digits = 3, row.names = FALSE)
 
 ## ------------------------------------------------------------------------
 testFn0 <- function(x) prod(cos(x))
@@ -162,7 +163,7 @@ testFn2_v <- function(x) {
     matrix(apply(x, 2, function(z) ifelse(sum(z * z) < radius * radius, 1, 0)), ncol = ncol(x))
 }
 
-d <- harness(which = c("hc", "hc.v", "cc"),
+d <- harness(which = c("hc", "hc.v", "cc", "cc_v"),
              f = testFn2, fv = testFn2_v,
              lowerLimit = rep(0, 2), upperLimit = rep(1, 2), times = 10)
 knitr::kable(d, digits = 3)
