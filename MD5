@@ -1,4 +1,4 @@
-0496c9d7c48493f41f147662a1a83603 *DESCRIPTION
+79da8221a842839da4e051572f0f98c9 *DESCRIPTION
 a628f272a6422756ec689c0333f2c2db *NAMESPACE
 44ed72bf1f8d5a5081df93f72c92c0b5 *NEWS.md
 4628a8a5ace2fd1b7fbd5fbaff19fe7f *R/RcppExports.R
@@ -70,7 +70,7 @@ b97dc3ed6ad39ce06fbcc0e49051827d *src/Cuba-4.2/src/common/CSample.c
 b392e971c06ba7ab17ac8dd60e010919 *src/Cuba-4.2/src/common/ChiSquare.c
 8846a3ca6022394ce07a7dbdfe6b87ce *src/Cuba-4.2/src/common/Data.c
 b9025ed24b0ce1120ea2bdee19244bf9 *src/Cuba-4.2/src/common/Erf.c
-86d5d0fb033d751ce6b3ab0f4106221e *src/Cuba-4.2/src/common/Fork.c
+3e30015546f9a9ddbd6216b6d22708bb *src/Cuba-4.2/src/common/Fork.c
 4bb537873e01316cf4e1817228410381 *src/Cuba-4.2/src/common/Global.c
 823c4a9ab0ad8fa600e2a91c48cf3734 *src/Cuba-4.2/src/common/MSample.c
 74a0d31fcd6b895ff5bb26bc039643d5 *src/Cuba-4.2/src/common/Parallel.c

@@ -96,7 +96,7 @@ Extern void SUFFIX(cubafork)(Spin **pspin)
     int fd[2];
     pid_t pid;
     assert(
-      socketpair(AF_LOCAL, SOCK_STREAM, 0, fd) != -1 &&
+      socketpair(AF_UNIX, SOCK_STREAM, 0, fd) != -1 &&
       (pid = fork()) != -1 );
     if( pid == 0 ) {
       close(fd[0]);
