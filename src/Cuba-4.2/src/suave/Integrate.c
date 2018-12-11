@@ -38,16 +38,14 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
       "  flags %d\n  seed %d\n"
       "  mineval " NUMBER "\n  maxeval " NUMBER "\n"
       "  nnew " NUMBER "\n  nmin " NUMBER "\n"
-      "  flatness " REAL "\n"
-      "  statefile \"%s\"",
+	    "  flatness " REAL "\n",
       t->ndim, t->ncomp,
       ML_NOT(t->nvec,)
       SHOW(t->epsrel), SHOW(t->epsabs),
       t->flags, t->seed,
       t->mineval, t->maxeval,
       t->nnew, t->nmin,
-      SHOW(t->flatness),
-      t->statefile);
+	    SHOW(t->flatness));
     Print(out);
   }
 
@@ -194,9 +192,15 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
     /* apply stratified sampling to distribute points in bisected region */
     vLR = var[bisectdim];
     minfluct = vLR[0].fluct + vLR[1].fluct;
-    nnewL = IMax(
-      (minfluct == 0) ? t->nnew/2 : (count)(vLR[0].fluct/minfluct*t->nnew),
-      minsamples );
+    /* This if block added by B. Narasimhan, to account for infinite minfluct! */
+    if (isfinite(minfluct)) {
+      nnewL = IMax(
+		   (minfluct == 0) ? t->nnew/2 : (count)(vLR[0].fluct/minfluct*t->nnew),
+		   minsamples );
+    } else {
+      nnewL = t->nnew;
+    }
+    /* End of if block added by B. Narasimhan */    
     nL = vLR[0].n + nnewL;
     nnewR = IMax(t->nnew - nnewL, minsamples);
     nR = vLR[1].n + nnewR;

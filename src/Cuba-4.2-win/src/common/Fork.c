@@ -59,7 +59,11 @@ Extern void SUFFIX(cubafork)(Spin **pspin)
     static int load = uninitialized;
     if( load == uninitialized ) {
       double loadavg;
-      getloadavg(&loadavg, 1);
+      int ret_code = getloadavg(&loadavg, 1);
+      if (ret_code < 0) {
+	*pspin = NULL;
+	return;
+      }
       load = floor(loadavg);
     }
     cubaworkers_.ncores = IMax(-cubaworkers_.ncores - load, 0);
@@ -96,7 +100,7 @@ Extern void SUFFIX(cubafork)(Spin **pspin)
     int fd[2];
     pid_t pid;
     assert(
-      socketpair(AF_LOCAL, SOCK_STREAM, 0, fd) != -1 &&
+      socketpair(AF_UNIX, SOCK_STREAM, 0, fd) != -1 &&
       (pid = fork()) != -1 );
     if( pid == 0 ) {
       close(fd[0]);
@@ -142,7 +146,7 @@ Extern void SUFFIX(cubawait)(Spin **pspin)
 
   for( core = 0; core < cores; ++core ) {
     DEB_ONLY(pid_t pid;)
-    MASTER("waiting for child");
+    MASTER("waiting for child", (pid_t) 0);
     DEB_ONLY(pid =) wait(&status);
     MASTER("pid %d terminated with exit code %d", pid, status);
   }
