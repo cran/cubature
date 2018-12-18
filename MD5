@@ -1,6 +1,6 @@
-a64aaa02f75e4358d2f73257718f18a3 *DESCRIPTION
+c7d6c0ccfc4fbbeaa7520aa2035fbb95 *DESCRIPTION
 a628f272a6422756ec689c0333f2c2db *NAMESPACE
-101d972a06c2fcef137431f944a6825c *NEWS.md
+510dd0bb20cd4b55c00c950c9d58ea3a *NEWS.md
 4628a8a5ace2fd1b7fbd5fbaff19fe7f *R/RcppExports.R
 2054f8eb153ffa1241fe1573d035a694 *R/cubature-package.R
 416d33f55106894098a7f3d5995e875d *R/cubintegrate.R
@@ -13,10 +13,11 @@ d3b7eb53832cd86889d693bb23d12662 *R/vegas.R
 8f61accf4f9003315fd795dc0631561f *build/vignette.rds
 a45ff1b4542f54e432d4199fca04192d *inst/doc/cubature.R
 5eb3b587905257dd649f3ae437bca3af *inst/doc/cubature.Rmd
-b9f1140f0b9d4e5ac2d309932e13d053 *inst/doc/cubature.html
+dd305e54025a8e3e66689db724fae927 *inst/doc/cubature.html
 a6684c0fcfd207728ee88eb68c8a84da *inst/doc/version2.R
 93cf922984e59cb920735b1ccb08efd5 *inst/doc/version2.Rmd
-7eba163ab4bb2e5b18d454b4b372e803 *inst/doc/version2.html
+d926c4fa7d55b1b8f58a05efb4b03de4 *inst/doc/version2.html
+be3607daf21e4963597a4316506008fb *inst/include/cuba.h
 8f9a5a70456a0b11ab7244b4beb521f0 *inst/include/cubature.h
 7d2e2edf6d3dedd86dab67ba85725b2b *inst/include/exp_cubature.h
 c25f03d1f6f706441867fc3b6caab050 *inst/include/exp_cubature_typedefs.h
@@ -50,8 +51,8 @@ a87ec5b2cfbeb9f1908ba6540fe153a6 *src/Cuba-4.2/ChangeLog
 559bc9e2fca45761389ce2f3140cec0c *src/Cuba-4.2/config.guess
 034284c3e15f7c409d1817fa33aa4623 *src/Cuba-4.2/config.h
 736e21df32e72a080f17c51e3e4725d5 *src/Cuba-4.2/config.h.in
-7b4b255602b3c891775e70f44d3b6b51 *src/Cuba-4.2/config.log
-6eca9d6d0f5c76c7e13e42950dfc3e3c *src/Cuba-4.2/config.status
+b4777e3298016746185f437700da604c *src/Cuba-4.2/config.log
+be9f1ceb624e11189b971c63b4de2ff1 *src/Cuba-4.2/config.status
 70b9398b6d452ecbd18efa25d7d68c29 *src/Cuba-4.2/config.sub
 a3382d33fc453676ff15f8d6fb1ed5d4 *src/Cuba-4.2/configure
 33c63e9b0805b833e981e904c10e11a5 *src/Cuba-4.2/configure.ac
@@ -65,7 +66,7 @@ d7543d2d470f0474f09a5ba8a050b4ad *src/Cuba-4.2/demo/demo-c.out
 24244c5a807d192ca73503cad11ff678 *src/Cuba-4.2/demo/demo-math.m
 ae2d9823587f4192893ddfb8439433b5 *src/Cuba-4.2/demo/testsuite.m
 92067666ddce97609bd0ec67d36460cd *src/Cuba-4.2/install-sh
-c5988d4d922bb0de8a4bfffdc2b5ed2a *src/Cuba-4.2/makefile
+4c4b7bf39d1b318ded5345bd049de92b *src/Cuba-4.2/makefile
 5a9a69e5d62bb43f65b6088db059e4f6 *src/Cuba-4.2/makefile.in
 b97dc3ed6ad39ce06fbcc0e49051827d *src/Cuba-4.2/src/common/CSample.c
 b392e971c06ba7ab17ac8dd60e010919 *src/Cuba-4.2/src/common/ChiSquare.c
@@ -98,7 +99,7 @@ aa59c690e6b5792f82c79558553a30ad *src/Cuba-4.2/src/divonne/FindMinimum.c
 3d940fef5e3b5206d40eb66b29b88bae *src/Cuba-4.2/src/divonne/KorobovCoeff.c-9689
 d30add9096df394361ebebc4f3460194 *src/Cuba-4.2/src/divonne/Rule.c
 7d7e623dfc26aae47986d3302f8bb31a *src/Cuba-4.2/src/divonne/Sample.c
-f96dad05fcb22049b06815d66e29699a *src/Cuba-4.2/src/divonne/Split.c
+85cdbdae55a466268fbac242f1a6ad86 *src/Cuba-4.2/src/divonne/Split.c
 d1dcac18065af755ebb301b9b03ac4f2 *src/Cuba-4.2/src/divonne/common.c
 38a791c76ceae217e711d352fa4ef84c *src/Cuba-4.2/src/divonne/decl.h
 a795536c61fb01a4896d6b6cc33b85eb *src/Cuba-4.2/src/suave/Fluct.c
@@ -124,8 +125,8 @@ d4caab82fc7703a8011a70b75fd7f16d *src/Cuba-4.2/tools/partview.m
 37dab82240416edfd405d64efcf1f1fe *src/Cuba-4.2/tools/partview.pro
 742684054d4d0970fa9394dbab190bed *src/Cuba-4.2/tools/print.xpm
 a42ff10f285881cebe8e79eb677f4ad9 *src/Cuba-4.2/tools/quit.xpm
-417d066e8aebc4b5553f20da9af990a5 *src/Makevars
-40c14175acd43540a30775a157b4c48a *src/Makevars.win
+51c2dc0fd8444f638da2300e63d44240 *src/Makevars
+cb6c7735eff5a56bd846fcd299ac3c3c *src/Makevars.win
 492b530a13f28af0018dfd1080a05fe8 *src/Rcpp-Cuba.cpp
 b9bee064eacf13101c384c924ae18ae8 *src/Rcpp-cubature.cpp
 1e864db175c17d789d5052ade5da0918 *src/RcppExports.cpp

@@ -1,3 +1,9 @@
+# cubature 2.0.3
+
+- Fixed up stack overrun in `Cuba-4.2/src/divonne/Split.c` (lines
+  119--128 utilizing a flag for first time through loop
+- More cleanup of `Makevars`
+
 # cubature 2.0.2
 
 - Fixed up uninitialized count for `hcubature` (Thanks, Ehsan
@@ -12,7 +18,8 @@
   * Removed printing of `statefile` in all the `src/*/Integrate.c`
     routines to avoid segfault on solaris.
   * Added `ret_code` for return value in call to `getloadavg` in
-    `Cuba-4.2/src/common/Fork.c`. 
+    `Cuba-4.2/src/common/Fork.c`. Also added an `#ifdef SOLARIS` for
+    including appropriate header under solaris.
   * Fixed up call to `MASTER` variadic macro by including dummy argument
     0 in `Cuba-4.2/src/common/Fork.c`, line 146.
   * Replaced multi-statement macro with a `do { } while(0)` hack.
