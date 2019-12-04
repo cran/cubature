@@ -7,11 +7,12 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Balasubramanian Narasimhan" />
 
-<meta name="date" content="2018-12-17" />
+<meta name="date" content="2019-12-03" />
 
 <title>Version 2.0 Notes</title>
 
@@ -256,9 +257,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -272,7 +271,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -283,22 +281,80 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -308,8 +364,8 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Version 2.0 Notes</h1>
-<h4 class="author"><em>Balasubramanian Narasimhan</em></h4>
-<h4 class="date"><em>2018-12-17</em></h4>
+<h4 class="author">Balasubramanian Narasimhan</h4>
+<h4 class="date">2019-12-03</h4>
 
 </div>
 
@@ -625,12 +681,12 @@ my_dmvnorm &lt;- function (x, mean, sigma, logdet) {
 <div id="session-info" class="section level2">
 <h2>Session Info</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin17.7.0 (64-bit)
-## Running under: macOS  10.14.2
+<pre><code>## R version 3.6.1 (2019-07-05)
+## Platform: x86_64-apple-darwin19.0.0 (64-bit)
+## Running under: macOS Catalina 10.15.1
 ## 
 ## Matrix products: default
-## BLAS/LAPACK: /usr/local/Cellar/openblas/0.3.3/lib/libopenblasp-r0.3.3.dylib
+## BLAS/LAPACK: /usr/local/Cellar/openblas/0.3.7/lib/libopenblasp-r0.3.7.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -639,15 +695,13 @@ my_dmvnorm &lt;- function (x, mean, sigma, logdet) {
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] mvtnorm_1.0-8  cubature_2.0.3 benchr_0.2.2  
+## [1] mvtnorm_1.0-11 cubature_2.0.4 benchr_0.2.3-1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.0         digest_0.6.18      rprojroot_1.3-2   
-##  [4] backports_1.1.2    magrittr_1.5       evaluate_0.12     
-##  [7] highr_0.7          stringi_1.2.4      rmarkdown_1.10    
-## [10] tools_3.5.1        stringr_1.3.1      RcppProgress_0.4.1
-## [13] yaml_2.2.0         compiler_3.5.1     htmltools_0.3.6   
-## [16] knitr_1.20</code></pre>
+##  [1] Rcpp_1.0.3         digest_0.6.23      magrittr_1.5       evaluate_0.14     
+##  [5] highr_0.8          rlang_0.4.2        stringi_1.4.3      rmarkdown_1.17    
+##  [9] tools_3.6.1        stringr_1.4.0      RcppProgress_0.4.1 xfun_0.11         
+## [13] yaml_2.2.0         compiler_3.6.1     htmltools_0.4.0    knitr_1.26</code></pre>
 </div>
 
 
@@ -667,6 +721,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

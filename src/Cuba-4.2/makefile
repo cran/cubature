@@ -5,7 +5,7 @@ MCFLAGS =
 FC = gfortran
 FCFLAGS = -g -O2 -DREALSIZE=8
 LIBS = -lm
-INSTALL = /usr/local/bin/ginstall -c
+INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 RANLIB = ranlib

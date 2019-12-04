@@ -1,4 +1,4 @@
-## ----echo=FALSE----------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::opts_chunk$set(
     message = FALSE,
     warning = FALSE,
@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
     cache = FALSE
 )
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(benchr)
 library(cubature)
 
@@ -72,7 +72,7 @@ harness <- function(which = NULL,
     d
 }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 func <- function(x) sin(x[1]) * cos(x[2]) * exp(x[3])
 func.v <- function(x) {
     matrix(apply(x, 2, function(z) sin(z[1]) * cos(z[2]) * exp(z[3])), ncol = ncol(x))
@@ -85,7 +85,7 @@ d <- harness(f = func, fv = func.v,
              times = 100)
 knitr::kable(d, digits = 3, row.names = FALSE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 m <- 3
 sigma <- diag(3)
 sigma[2,1] <- sigma[1, 2] <- 3/5 ; sigma[3,1] <- sigma[1, 3] <- 1/3
@@ -102,7 +102,7 @@ my_dmvnorm_v <- function (x, mean, sigma, logdet) {
     exp(matrix(-(3 * log(2 * pi) + logdet + distval)/2, ncol = ncol(x)))
 }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 d <- harness(f = my_dmvnorm, fv = my_dmvnorm_v,
              lowerLimit = rep(-0.5, 3),
              upperLimit = c(1, 4, 2),
@@ -111,7 +111,7 @@ d <- harness(f = my_dmvnorm, fv = my_dmvnorm_v,
              mean = rep(0, m), sigma = sigma, logdet = logdet)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(mvtnorm)
 g1 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
                                   upper = c(1, 4, 2), mean = rep(0, m), corr = sigma,
@@ -126,7 +126,7 @@ g3 <- function() mvtnorm::pmvnorm(lower = rep(-0.5, m),
 knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = FALSE)),
              digits = 3, row.names = FALSE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn0 <- function(x) prod(cos(x))
 testFn0_v <- function(x) matrix(apply(x, 2, function(z) prod(cos(z))), ncol = ncol(x))
 
@@ -134,7 +134,7 @@ d <- harness(f = testFn0, fv = testFn0_v,
              lowerLimit = rep(0, 2), upperLimit = rep(1, 2), times = 1000)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn1 <- function(x) {
     val <- sum(((1 - x) / x)^2)
     scale <- prod((2 / sqrt(pi)) / x^2)
@@ -152,7 +152,7 @@ d <- harness(f = testFn1, fv = testFn1_v,
 
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn2 <- function(x) {
     radius <- 0.50124145262344534123412
     ifelse(sum(x * x) < radius * radius, 1, 0)
@@ -168,7 +168,7 @@ d <- harness(which = c("hc", "hc.v", "cc", "cc_v"),
              lowerLimit = rep(0, 2), upperLimit = rep(1, 2), times = 10)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn3 <- function(x) prod(2 * x)
 testFn3_v <- function(x) matrix(apply(x, 2, function(z) prod(2 * z)), ncol = ncol(x))
 
@@ -176,7 +176,7 @@ d <- harness(f = testFn3, fv = testFn3_v,
              lowerLimit = rep(0, 3), upperLimit = rep(1, 3), times = 50)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn4 <- function(x) {
     a <- 0.1
     s <- sum((x - 0.5)^2)
@@ -196,7 +196,7 @@ d <- harness(f = testFn4, fv = testFn4_v,
              lowerLimit = rep(0, 2), upperLimit = rep(1, 2), times = 20)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn5 <- function(x) {
     a <- 0.1
     s1 <- sum((x - 1 / 3)^2)
@@ -217,7 +217,7 @@ d <- harness(f = testFn5, fv = testFn5_v,
              lowerLimit = rep(0, 2), upperLimit = rep(1, 2), times = 20)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn6 <- function(x) {
     a <- (1 + sqrt(10.0)) / 9.0
     prod( a / (a + 1) * ((a + 1) / (a + x))^2)
@@ -233,7 +233,7 @@ d <- harness(f = testFn6, fv = testFn6_v,
              lowerLimit = rep(0, 3), upperLimit = rep(1, 3), times = 20)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 testFn7 <- function(x) {
     n <- length(x)
     p <- 1/n
@@ -251,7 +251,7 @@ d <- harness(f = testFn7, fv = testFn7_v,
              lowerLimit = rep(0, 3), upperLimit = rep(1, 3), times = 20)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 I.1d <- function(x) {
     sin(4 * x) *
         x * ((x * ( x * (x * x - 4) + 1) - 1))
@@ -266,7 +266,7 @@ d <- harness(f = I.1d, fv = I.1d_v,
              lowerLimit = -2, upperLimit = 2, times = 100)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 I.2d <- function(x) {
     x1 <- x[1]; x2 <- x[2]
     sin(4 * x1 + 1) * cos(4 * x2) * x1 * (x1 * (x1 * x1)^2 - x2 * (x2 * x2 - x1) +2)
@@ -283,6 +283,6 @@ d <- harness(f = I.2d, fv = I.2d_v,
              lowerLimit = rep(-1, 2), upperLimit = rep(1, 2), times = 100)
 knitr::kable(d, digits = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 sessionInfo()
 

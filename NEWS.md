@@ -1,3 +1,11 @@
+# cubature 2.0.4
+
+- `cubintegrate` now matches method via `match.arg` ([Issue
+  25](https://github.com/bnaras/cubature/issues/25))
+
+- Address `gcc` version 10.0 changes due to `-fno-common` default
+  setting.
+
 # cubature 2.0.3
 
 - Fixed up stack overrun in `Cuba-4.2/src/divonne/Split.c` (lines
