@@ -1,11 +1,11 @@
-CC = /usr/local/opt/llvm/bin/clang
+CC = clang
 SUFFIX = 
-CFLAGS = -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -fPIC -USOLARIS -DRCPP_USE_UNWIND_PROTECT -I. -I../inst/include -DHAVE_CONFIG_H -DREALSIZE=8 $(PKG_CFLAGS) -I$(common) -I. -I$(srcdir) 
+CFLAGS = -Wno-implicit-function-declaration  -fPIC -USOLARIS -DRCPP_USE_UNWIND_PROTECT -I. -I../inst/include -DHAVE_CONFIG_H -DREALSIZE=8 $(PKG_CFLAGS) -I$(common) -I. -I$(srcdir) 
 MCFLAGS = 
 FC = gfortran
 FCFLAGS = -g -O2 -DREALSIZE=8
 LIBS = -lm
-INSTALL = /usr/bin/install -c
+INSTALL = /usr/local/bin/ginstall -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 RANLIB = ranlib
