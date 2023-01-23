@@ -1,6 +1,6 @@
-CC = clang
+CC = gcc
 SUFFIX = 
-CFLAGS = -Wno-implicit-function-declaration  -Wall -pedantic -fdiagnostics-color=always -fPIC -USOLARIS -DRCPP_USE_UNWIND_PROTECT -I. -I../inst/include -DHAVE_CONFIG_H -DREALSIZE=8 $(PKG_CFLAGS) -I$(common) -I. -I$(srcdir) 
+CFLAGS = -O3 -fomit-frame-pointer -ffast-math -Wall -DHAVE_CONFIG_H -DREALSIZE=8 $(PKG_CFLAGS) -I$(common) -I. -I$(srcdir) 
 MCFLAGS = 
 FC = gfortran
 FCFLAGS = -g -O2 -DREALSIZE=8
