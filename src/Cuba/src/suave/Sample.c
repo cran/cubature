@@ -5,6 +5,10 @@
 		last modified 13 Mar 15 th
 */
 
+#ifdef _R_INTERFACE
+#include <R.h>
+#endif
+
 
 typedef struct {
   real sum, sqsum;
@@ -25,6 +29,8 @@ static void Sample(This *t, cnumber nnew, Region *region,
   Result *res;
   char **ss = NULL, *s = NULL;
   ccount chars = 128*(region->div + 1);
+  size_t ss_avail[t->ncomp];
+  for (int i = 0; i < t->ncomp; ++i) ss_avail[i] = (size_t) chars;
 
   creal jacobian = 1/ldexp((real)nnew, region->div);
   real *w = lastw, *f = lastx;
@@ -74,7 +80,7 @@ static void Sample(This *t, cnumber nnew, Region *region,
     creal weight = fabsx(*w++);
     ++n;
 
-    for( c = cumul, comp = 0; c < C; ++c ) {
+    for( c = cumul, comp = 0; c < C; ++c ) {      
       creal wfun = weight*(*f++);
       c->sum += wfun;
       c->sqsum += Sq(wfun);
@@ -87,13 +93,15 @@ static void Sample(This *t, cnumber nnew, Region *region,
 
           if( VERBOSE > 2 ) {
             creal sig = sqrtx(1/w);
-            ss[comp] += (df == 0) ?
-              sprintf(ss[comp], "\n[" COUNT "] "
-                REAL " +- " REAL " (" NUMBER ")", comp + 1,
-                SHOW(c->sum), SHOW(sig), n) :
-              sprintf(ss[comp], "\n    "
-                REAL " +- " REAL " (" NUMBER ")",
-                SHOW(c->sum), SHOW(sig), n);
+            if (df == 0) {
+              safe_sprintf(&ss[comp], &ss_avail[comp], "\n[" COUNT "] "
+			   REAL " +- " REAL " (" NUMBER ")", comp + 1,
+			   SHOW(c->sum), SHOW(sig), n);
+	    } else {
+	      safe_sprintf(&ss[comp], &ss_avail[comp], "\n    "
+			  REAL " +- " REAL " (" NUMBER ")",
+			  SHOW(c->sum), SHOW(sig), n);
+	    }
           }
 
           if( df == 0 ) c->guess = c->sum;
@@ -142,21 +150,20 @@ static void Sample(This *t, cnumber nnew, Region *region,
 
   if( VERBOSE > 2 ) {
     char *p = s;
+    size_t avail = t->ncomp * chars;
     char *p0 = p + t->ndim*64;
     char *msg = "\nRegion (" REALF ") - (" REALF ")";
 
     for( b = bounds; b < B; ++b ) {
-      p += sprintf(p, msg, b->lower, b->upper);
+      safe_sprintf(&p, &avail, msg, b->lower, b->upper);
       msg = "\n       (" REALF ") - (" REALF ")";
     }
 
     for( comp = 0, res = region->result;
          comp < t->ncomp; ++comp, ++res ) {
-      p += sprintf(p, "%s  \tchisq " REAL " (" COUNT " df)",
-        p0, SHOW(res->chisq), df);
-      p0 += chars;
+      safe_sprintf(&p, &avail, "%s  \tchisq " REAL " (" COUNT " df)",
+		   p0, SHOW(res->chisq), df);
     }
-
     Print(s);
     free(ss);
   }

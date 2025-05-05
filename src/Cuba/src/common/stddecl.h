@@ -4,6 +4,9 @@
 		last modified 28 Jun 21 th
 */
 
+#ifdef _R_INTERFACE
+#include <r_helpers.h>
+#endif
 
 #ifndef _stddecl_h_
 #define _stddecl_h_
@@ -97,7 +100,7 @@ enum { uninitialized = 0x61627563 };
       var = atoi(env); \
       if( cubaverb_ ) { \
         char out[64]; \
-        sprintf(out, "env " name " = %d", (int)var); \
+        snprintf(out, sizeof out, "env " name " = %d", (int)var);	\
         Print(out); \
       } \
     } \
@@ -156,7 +159,11 @@ enum { uninitialized = 0x61627563 };
 
 #define Abort(s) abort1(s, __LINE__)
 #define abort1(s, line) abort2(s, line)
+#ifdef _R_INTERFACE
+#define abort2(s, line) do { perror(s " " __FILE__ "(" #line ")"); invoke_r_exit(); } while(0)
+#else
 #define abort2(s, line) { perror(s " " __FILE__ "(" #line ")"); exit(1); }
+#endif
 
 #define Die(p) if( (p) == NULL ) Abort("malloc")
 
@@ -283,7 +290,7 @@ enum { signature = 0x41425543 };
   } \
   if( ini | statemsg ) { \
     char s[512]; \
-    sprintf(s, ini ? \
+    snprintf(s, sizeof s, ini ?					  \
       "\nError restoring state from %s, starting from scratch." : \
       "\nRestored state from %s.", (t)->statefile); \
     Print(s); \
@@ -310,7 +317,7 @@ enum { signature = 0x41425543 };
   } \
   if( fail | statemsg ) { \
     char s[512]; \
-    sprintf(s, fail ? \
+    snprintf(s, sizeof s, fail ?	      \
       "\nError saving state to %s." : \
       "\nSaved state to %s.", (t)->statefile); \
     Print(s); \
@@ -567,7 +574,11 @@ static inline void Print(MLCONST char *s)
 
 #else
 
+#ifdef _R_INTERFACE
+#define Print(s) Rprintf("%s\n", s)
+#else
 #define Print(s) do { puts(s); fflush(stdout); } while( 0 )
+#endif
 
 #endif
 

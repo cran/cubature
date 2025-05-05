@@ -7,6 +7,9 @@
 		checkpointing by B. Chokoufe
 		last modified 25 Nov 20 th
 */
+#ifdef _R_INTERFACE
+#include <R.h>
+#endif
 
 
 typedef struct {
@@ -36,7 +39,7 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
   int fail;
 
   if( VERBOSE > 1 ) {
-    sprintf(out, "Divonne input parameters:\n"
+    snprintf(out, sizeof out, "Divonne input parameters:\n"
       "  ndim " COUNT "\n  ncomp " COUNT "\n"
       ML_NOT("  nvec " NUMBER "\n")
       "  epsrel " REAL "\n  epsabs " REAL "\n"
@@ -189,17 +192,20 @@ if( StateWriteTest(t) ) { \
       WriteState(t);
 
       if( VERBOSE ) {
-        char *oe = out + sprintf(out, "\n"
-          "Iteration " COUNT " (pass " COUNT "):  " COUNT " regions\n"
-          NUMBER7 " integrand evaluations so far,\n"
-          NUMBER7 " in optimizing regions,\n"
-          NUMBER7 " in finding cuts",
-          state->iter, state->pass, t->nregions,
-          t->neval, t->neval_opt, t->neval_cut);
-        for( comp = 0; comp < t->ncomp; ++comp )
-          oe += sprintf(oe, "\n[" COUNT "] "
-            REAL " +- " REAL,
-            comp + 1, SHOW(integral[comp]), SHOW(error[comp]));
+	char *oe = out;
+	size_t avail = sizeof out;
+	safe_sprintf(&oe, &avail, "\n"
+		     "Iteration " COUNT " (pass " COUNT "):  " COUNT " regions\n"
+		     NUMBER7 " integrand evaluations so far,\n"
+		     NUMBER7 " in optimizing regions,\n"
+		     NUMBER7 " in finding cuts",
+		     state->iter, state->pass, t->nregions,
+		     t->neval, t->neval_opt, t->neval_cut);
+        for( comp = 0; comp < t->ncomp; ++comp ) {
+	  safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		       REAL " +- " REAL,
+		       comp + 1, SHOW(integral[comp]), SHOW(error[comp])); 
+	}
         Print(out);
       }
 
@@ -255,7 +261,7 @@ if( StateWriteTest(t) ) { \
     SamplesAlloc(t, &t->samples[1]);
 
     if( VERBOSE ) {
-      sprintf(out, "\nMain integration on " COUNT
+      snprintf(out, sizeof out, "\nMain integration on " COUNT
         " regions with " NUMBER " samples per region.",
         t->nregions, t->samples[1].neff);
       Print(out);
@@ -277,6 +283,7 @@ if( StateWriteTest(t) ) { \
     while( state->iregion < t->nregions ) {
       Region *region;
       char *oe = out;
+      size_t avail = sizeof out;
       int todo;
 
 refine:
@@ -325,7 +332,7 @@ refine:
                       can_adjust = false;
 
                     if( VERBOSE > 2 ) {
-                      sprintf(out, "Sampling remaining " COUNT
+                      snprintf(out, sizeof out, "Sampling remaining " COUNT
                         " regions with " NUMBER " points per region.",
                         t->nregions, t->samples[1].neff);
                       Print(out);
@@ -369,7 +376,7 @@ refine:
       if( VERBOSE > 2 ) {
         cchar *msg = "\nRegion (" REALF ") - (" REALF ")";
         for( B = (b = region->bounds) + t->ndim; b < B; ++b ) {
-          oe += sprintf(oe, msg, SHOW(b->lower), SHOW(b->upper));
+	  safe_sprintf(&oe, &avail, msg, SHOW(b->lower), SHOW(b->upper));
           msg = "\n       (" REALF ") - (" REALF ")";
         }
       }
@@ -408,12 +415,15 @@ refine:
         if( VERBOSE > 2 ) {
 #define Out2(f, r) SHOW((r)->avg), SHOW(res->spread/t->samples[f].neff), SHOW((r)->err)
 #define Out(f) Out2(f, &tot->phase[f])
-          oe += sprintf(oe, "\n[" COUNT "] "
-            REAL " +- " REAL "(" REAL ")\n    "
-            REAL " +- " REAL "(" REAL ")", ++comp, Out(0), Out(1));
-          if( todo == 3 ) oe += sprintf(oe, "\n    "
-            REAL " +- " REAL "(" REAL ")", Out2(2, res));
-          oe += sprintf(oe, "  \tchisq " REAL, SHOW(chisq));
+	  safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		       REAL " +- " REAL "(" REAL ")\n    "
+		       REAL " +- " REAL "(" REAL ")", ++comp, Out(0), Out(1));
+
+          if( todo == 3 ) {
+	    safe_sprintf(&oe, &avail, "\n    "
+			 REAL " +- " REAL "(" REAL ")", Out2(2, res));
+	  }
+	  safe_sprintf(&oe, &avail, "  \tchisq " REAL, SHOW(chisq));
         }
 
         tot->integral += avg;
@@ -440,12 +450,15 @@ refine:
     }
 
     if( VERBOSE > 2 ) {
-      char *oe = out + sprintf(out, "\nTotals:");
-      for( tot = state->totals, comp = 0; tot < Tot; ++tot, ++comp )
-        oe += sprintf(oe, "\n[" COUNT "] "
-          REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
-          comp + 1, SHOW(integral[comp]), SHOW(error[comp]),
-          SHOW(tot->chisq), df);
+      char *oe = out;
+      size_t avail = sizeof out;
+      safe_sprintf(&oe, &avail, "\nTotals:");
+      for( tot = state->totals, comp = 0; tot < Tot; ++tot, ++comp ) {
+	safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		     REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
+		     comp + 1, SHOW(integral[comp]), SHOW(error[comp]),
+		     SHOW(tot->chisq), df);
+      }
       Print(out);
     }
 

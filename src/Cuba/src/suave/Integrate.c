@@ -5,6 +5,9 @@
 		checkpointing by B. Chokoufe
 		last modified 13 Mar 15 th
 */
+#ifdef _R_INTERFACE
+#include <R.h>
+#endif
 
 
 typedef struct {
@@ -31,7 +34,7 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
   int fail;
 
   if( VERBOSE > 1 ) {
-    sprintf(out, "Suave input parameters:\n"
+    snprintf(out, sizeof out, "Suave input parameters:\n"
       "  ndim " COUNT "\n  ncomp " COUNT "\n"
       ML_NOT("  nvec " NUMBER "\n")
       "  epsrel " REAL "\n  epsabs " REAL "\n"
@@ -131,14 +134,17 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
     real *w, *wL, *wR, *x, *xL, *xR, *f, *fL, *fR, *wlast, *flast;
 
     if( VERBOSE ) {
-      char *oe = out + sprintf(out, "\n"
-        "Iteration " COUNT ":  " NUMBER " integrand evaluations so far",
-        t->nregions, t->neval);
-      for( tot = state->totals, comp = 0; tot < Tot; ++tot )
-        oe += sprintf(oe, "\n[" COUNT "] "
-          REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
-          ++comp, SHOW(tot->avg), SHOW(tot->err),
-          SHOW(tot->chisq), state->df);
+      char *oe = out;
+      size_t avail = sizeof out;
+      safe_sprintf(&oe, &avail, "\n"
+		   "Iteration " COUNT ":  " NUMBER " integrand evaluations so far",
+		   t->nregions, t->neval);
+      for( tot = state->totals, comp = 0; tot < Tot; ++tot ) {
+	safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		     REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
+		     ++comp, SHOW(tot->avg), SHOW(tot->err),
+		     SHOW(tot->chisq), state->df);
+      }
       Print(out);
     }
 

@@ -5,7 +5,9 @@
 		checkpointing by B. Chokoufe
 		last modified 14 Mar 15 th
 */
-
+#ifdef _R_INTERFACE
+#include <R.h>
+#endif
 
 #define POOLSIZE 1024
 
@@ -43,7 +45,9 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
   int fail;
 
   if( VERBOSE > 1 ) {
-    sprintf(out, "Cuhre input parameters:\n"
+    char *oe = out;
+    size_t avail = sizeof out;
+    safe_sprintf(&oe, &avail, "Cuhre input parameters:\n"
       "  ndim " COUNT "\n  ncomp " COUNT "\n"
       ML_NOT("  nvec " NUMBER "\n")
       "  epsrel " REAL "\n  epsabs " REAL "\n"
@@ -124,14 +128,17 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
     Bounds *bL, *bR;
 
     if( VERBOSE ) {
-      char *oe = out + sprintf(out, "\n"
-        "Iteration " COUNT ":  " NUMBER " integrand evaluations so far",
-        t->nregions, t->neval);
-      for( tot = state->totals, comp = 0; tot < Tot; ++tot )
-        oe += sprintf(oe, "\n[" COUNT "] "
-          REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
-          ++comp, SHOW(tot->avg), SHOW(tot->err),
-          SHOW(tot->chisq), t->nregions - 1);
+      char *oe = out;
+      size_t avail = sizeof out;
+      safe_sprintf(&oe, &avail, "\n"
+		   "Iteration " COUNT ":  " NUMBER " integrand evaluations so far",
+		   t->nregions, t->neval);
+      for(tot = state->totals, comp = 0; tot < Tot; ++tot) {
+	safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		     REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
+		     ++comp, SHOW(tot->avg), SHOW(tot->err),
+		     SHOW(tot->chisq), t->nregions - 1);
+      }
       Print(out);
     }
 

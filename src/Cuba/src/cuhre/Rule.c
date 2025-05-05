@@ -6,7 +6,9 @@
 		this file is part of Cuhre
 		last modified 7 May 15 th
 */
-
+#ifdef _R_INTERFACE
+#include <R.h>
+#endif
 
 #define NextSet(p) p = (Set *)((char *)p + setsize)
 #define IndexSet(p, n) ((Set *)((char *)p + n*setsize))
@@ -738,18 +740,20 @@ static void Sample(This *t, Region *region)
 
   if( VERBOSE > 2 ) {
     Vector(char, out, 64*NDIM + 128*NCOMP);
+    size_t avail = sizeof out;    
     char *oe = out;
     count comp;
     cchar *msg = "\nRegion (" REALF ") - (" REALF ")";
 
     for( b = region->bounds; b < B; ++b ) {
-      oe += sprintf(oe, msg, b->lower, b->upper);
+      safe_sprintf(&oe, &avail, msg, b->lower, b->upper);
       msg = "\n       (" REALF ") - (" REALF ")";
     }
 
-    for( res = result, comp = 0; res < Res; ++res )
-      oe += sprintf(oe, "\n[" COUNT "] "
-        REAL " +- " REAL, ++comp, SHOW(res->avg), SHOW(res->err));
+    for( res = result, comp = 0; res < Res; ++res ) {
+      safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		   REAL " +- " REAL, ++comp, SHOW(res->avg), SHOW(res->err));
+    }
 
     Print(out);
   }

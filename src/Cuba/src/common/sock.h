@@ -5,6 +5,10 @@
 		last modified 27 May 14 th
 */
 
+#ifdef _R_INTERFACE_
+#include <Rcpp.h>
+#endif
+
 #include <sys/socket.h>
 
 #ifdef DEBUG
@@ -12,9 +16,19 @@
 #define TERM_BLUE "\e[34m"
 #define TERM_RESET "\e[0m\n"
 #define MASTER(s, ...) \
-fprintf(stderr, TERM_RED ROUTINE " master %d(%d): " s TERM_RESET, core, getpid(), ##__VA_ARGS__)
+  // fprintf(stderr, TERM_RED ROUTINE " master %d(%d): " s TERM_RESET, core, getpid(), ##__VA_ARGS__)
+do {  \
+    char buf[1024]; \
+    std::snprintf(buf, sizeof(buf), TERM_RED ROUTINE " master %d(%d): " s TERM_RESET, core, getpid(), ##__VA_ARGS__); \
+    Rcpp::warning(buf); \
+} while(0)
 #define WORKER(s, ...) \
-fprintf(stderr, TERM_BLUE ROUTINE " worker %d(%d): " s TERM_RESET, core, getpid(), ##__VA_ARGS__)
+  //fprintf(stderr, TERM_BLUE ROUTINE " worker %d(%d): " s TERM_RESET, core, getpid(), ##__VA_ARGS__)
+do {  \
+    char buf[1024]; \
+    std::snprintf(buf, sizeof(buf), TERM_BLUE ROUTINE " worker %d(%d): " s TERM_RESET, core, getpid(), ##__VA_ARGS__); \
+    Rcpp::warning(buf); \
+} while(0)
 #define DEB_ONLY(...) __VA_ARGS__
 #else
 #define MASTER(s, ...)
@@ -26,9 +40,19 @@ fprintf(stderr, TERM_BLUE ROUTINE " worker %d(%d): " s TERM_RESET, core, getpid(
 #define TERM_GREEN "\e[32m"
 #define TERM_MAGENTA "\e[35m"
 #define READ(s, ...) \
-fprintf(stderr, TERM_GREEN ROUTINE " pid %d: read " s TERM_RESET, getpid(), ##__VA_ARGS__)
-#define WRITE(s, ...) \
-fprintf(stderr, TERM_MAGENTA ROUTINE " pid %d: write " s TERM_RESET, getpid(), ##__VA_ARGS__)
+  //fprintf(stderr, TERM_GREEN ROUTINE " pid %d: read " s TERM_RESET, getpid(), ##__VA_ARGS__)
+do {  \
+    char buf[1024]; \
+    std::snprintf(buf, sizeof(buf), TERM_GREEN ROUTINE " pid %d: read " s TERM_RESET, getpid(), ##__VA_ARGS__); \
+    Rcpp::warning(buf); \
+} while(0)
+#define WRITE(s, ...)							\
+  //fprintf(stderr, TERM_MAGENTA ROUTINE " pid %d: write " s TERM_RESET, getpid(), ##__VA_ARGS__)
+do {  \
+    char buf[1024]; \
+    std::snprintf(buf, sizeof(buf), TERM_MAGENTA ROUTINE " pid %d: write " s TERM_RESET, getpid(), ##__VA_ARGS__); \
+    Rcpp::warning(buf); \
+} while(0)
 #else
 #define READ(s, ...)
 #define WRITE(s, ...)

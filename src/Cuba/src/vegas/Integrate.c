@@ -5,6 +5,9 @@
 		last modified 13 Mar 15 th
 */
 
+#ifdef _R_INTERFACE
+#include <R.h>
+#endif
 
 typedef struct {
   signature_t signature;
@@ -29,7 +32,7 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
   Vector(char, out, 128*NCOMP + 256);
 
   if( VERBOSE > 1 ) {
-    sprintf(out, "Vegas input parameters:\n"
+    snprintf(out, sizeof out, "Vegas input parameters:\n"
       "  ndim " COUNT "\n  ncomp " COUNT "\n"
       ML_NOT("  nvec " NUMBER "\n")
       "  epsrel " REAL "\n  epsabs " REAL "\n"
@@ -159,14 +162,17 @@ static int Integrate(This *t, real *integral, real *error, real *prob)
     }
 
     if( VERBOSE ) {
-      char *oe = out + sprintf(out, "\n"
-        "Iteration " COUNT ":  " NUMBER " integrand evaluations so far",
-        state->niter + 1, t->neval);
-      for( c = state->cumul, comp = 0; c < C; ++c )
-        oe += sprintf(oe, "\n[" COUNT "] "
-          REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
-          ++comp, SHOW(c->avg), SHOW(c->err),
-          SHOW(c->chisq), state->niter);
+      char *oe = out;
+      size_t avail = sizeof out;
+      safe_sprintf(&oe, &avail, "\n"
+		   "Iteration " COUNT ":  " NUMBER " integrand evaluations so far",
+		   state->niter + 1, t->neval);
+      for( c = state->cumul, comp = 0; c < C; ++c ) {
+	safe_sprintf(&oe, &avail, "\n[" COUNT "] "
+		     REAL " +- " REAL "  \tchisq " REAL " (" COUNT " df)",
+		     ++comp, SHOW(c->avg), SHOW(c->err),
+		     SHOW(c->chisq), state->niter);
+      }
       Print(out);
     }
 
