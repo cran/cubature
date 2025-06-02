@@ -1,6 +1,6 @@
-6b0d666f491a5764c89a5dc13055955c *DESCRIPTION
+d63c032457cfb6b99bd0b5748da8f29f *DESCRIPTION
 a628f272a6422756ec689c0333f2c2db *NAMESPACE
-afd709bf1f554341955d31274a4f89ee *NEWS.md
+9236d1cbde368abe34bb6d07361d1ac3 *NEWS.md
 4628a8a5ace2fd1b7fbd5fbaff19fe7f *R/RcppExports.R
 b767cf794dc4442518c4f8450275eb51 *R/cubature-package.R
 6ec34247475287b49eac6f6bbb4198c2 *R/cubintegrate.R
@@ -14,10 +14,10 @@ a46357ed810c2aa6db619fc4f90f1783 *R/hcubature.R
 87abc22c5129d2aeaaa4d222ebcb26df *cleanup
 70b78625a9f4b092914e59922523f578 *inst/doc/cubature.R
 19f861b8651c711c934caf049c501c8d *inst/doc/cubature.Rmd
-69eb4c7d37010de5cbdf3a1849e39da7 *inst/doc/cubature.html
+a1f25f26c3ed47f831037f8ff5870f90 *inst/doc/cubature.html
 2904cfc62761191a5f762b0dacdcc4fe *inst/doc/version2.R
 32d2540fe1d2da9baf22975ad9a8de02 *inst/doc/version2.Rmd
-8757b57f39e3438be45ef941459d3280 *inst/doc/version2.html
+42a31ecb686edfea501557b08fef22bd *inst/doc/version2.html
 bc4134d5806c02c30c6ef61fceb16b6e *inst/include/cuba.h
 8f9a5a70456a0b11ab7244b4beb521f0 *inst/include/cubature.h
 e6d00ec23b2a3724c886d59f4043f5f0 *inst/include/exp_cubature.h
@@ -112,7 +112,7 @@ d4caab82fc7703a8011a70b75fd7f16d *src/Cuba/tools/partview.m
 37dab82240416edfd405d64efcf1f1fe *src/Cuba/tools/partview.pro
 742684054d4d0970fa9394dbab190bed *src/Cuba/tools/print.xpm
 a42ff10f285881cebe8e79eb677f4ad9 *src/Cuba/tools/quit.xpm
-a0a4627eba4703838915e191283f191e *src/Makevars
+a2e057d0d3fa2c25be0df44e23711174 *src/Makevars
 acc21ba8b1f6c72caad6aa7693b0f160 *src/Makevars.win
 492b530a13f28af0018dfd1080a05fe8 *src/Rcpp-Cuba.cpp
 b5c3fdf10a3b4ccb37e4f99dff1edb44 *src/Rcpp-cubature.cpp
